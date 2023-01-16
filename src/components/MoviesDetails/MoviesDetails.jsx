@@ -7,7 +7,7 @@ import {
   useLocation,
   useParams,
 } from 'react-router-dom';
-import css from './Movies.module.css';
+import css from '../MoviesList/Movies.module.css';
 
 const MovieDetails = () => {
   const { moviesId } = useParams();

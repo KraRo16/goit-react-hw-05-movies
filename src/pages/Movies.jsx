@@ -1,5 +1,5 @@
-import { MoviesList } from 'components/Movies/MoviesList';
-import { useCallback, useEffect, useState } from 'react';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { searchMoviesByName } from 'Sevices/Api';
 import css from './Pages.module.css';
@@ -10,21 +10,19 @@ const Movies = () => {
   const [seacrhParams, setSearchParams] = useSearchParams();
   const query = seacrhParams.get('query');
 
-  const fetchMovie = useCallback(async () => {
-    if (!query) {
-      return;
-    }
-    const response = await searchMoviesByName(query);
-    setMovies(response);
-  }, [query]);
-
   const handleSubmit = element => {
     element.preventDefault();
     setSearchParams({ query: searchQuery });
   };
   useEffect(() => {
-    fetchMovie();
-  }, [fetchMovie, query]);
+    (async () => {
+      if (!query) {
+        return;
+      }
+      const response = await searchMoviesByName(query);
+      setMovies(response);
+    })();
+  }, [query]);
 
   return (
     <div className={css.wrapperTitle}>
